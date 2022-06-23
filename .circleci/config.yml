@@ -1,0 +1,45 @@
+version: 2.1
+
+jobs:
+  test-flake8-lint:
+    docker:
+      - image: cimg/python:3.10.2
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: lint
+          command: pylint crm_service/
+      - run:
+          name: flake8
+          command: flake8 crm_service/
+#      - run:
+#          name: tests
+#          command: python manage.py test
+#      - store_test_results:
+#          path: test_results
+
+  build-and-deploy-docker:
+      docker:
+        - image: cimg/python:3.10.2
+      steps:
+        - checkout
+        - setup_remote_docker:
+            version: 19.03.13
+            docker_layer_caching: true
+        - deploy:
+            name: Push Application Docker Image
+            command: |
+              echo "$DOCKER_HUB_PASSWORD" | docker login --username $DOCKER_HUB_USERNAME --password-stdin
+              docker build -t klyned/crm-service:$CIRCLE_BRANCH .
+              docker push klyned/crm-service:$CIRCLE_BRANCH
+
+workflows:
+  build-and-test-workflow:
+    jobs:
+      - test-flake8-lint
+      - build-and-deploy-docker:
+          requires:
+            - test-flake8-lint
