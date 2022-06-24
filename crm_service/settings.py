@@ -13,10 +13,14 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+import sys
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+ROOT_DIR = environ.Path(__file__) - 2
+BASE_DIR = ROOT_DIR.path('crm_service')
+sys.path.append(BASE_DIR.path('apps').root)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -40,6 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+INSTALLED_APPS += (
+    'base',
+    'customers', )
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
