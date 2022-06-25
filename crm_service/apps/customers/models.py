@@ -27,6 +27,8 @@ class Customer(UUIDModel):
     is_active = models.BooleanField('Active', default=True,
                                     help_text='Designates whether this customer should be treated as '
                                               'active. Unselect this instead of deleting accounts.')
+
+    # Auto populated fields
     date_joined = models.DateTimeField('Date/Time Joined', default=timezone.now)
     created_by = models.CharField('Created by', blank=True, null=True, max_length=256)
     modified = models.DateTimeField('Modified', default=timezone.now)
