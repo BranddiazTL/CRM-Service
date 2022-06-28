@@ -7,7 +7,7 @@ from customers.models import Customer
 class CustomerAdminForm(forms.ModelForm):
     class Meta:
         model = Customer
-        exclude = ['id']
+        exclude = ["id"]
 
     def __init__(self, *args, **kwargs):
         super(CustomerAdminForm, self).__init__(*args, **kwargs)

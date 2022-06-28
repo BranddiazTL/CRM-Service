@@ -10,29 +10,128 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Customer',
+            name="Customer",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('image', models.ImageField(max_length=500, upload_to=base.utils.media_filename.handle_filename, verbose_name='Image')),
-                ('email', models.EmailField(db_index=True, max_length=254, unique=True, verbose_name='Email Address')),
-                ('name', models.CharField(db_index=True, max_length=256, unique=True, verbose_name='Name')),
-                ('surname', models.CharField(db_index=True, max_length=256, unique=True, verbose_name='Surname')),
-                ('deactivated', models.DateTimeField(blank=True, null=True, verbose_name='Deactivated')),
-                ('status', models.CharField(blank=True, choices=[('DEACTIVATED', 'DEACTIVATED'), ('SUSPENDED', 'SUSPENDED'), ('ACTIVE', 'ACTIVE')], default='ACTIVE', max_length=20, null=True, verbose_name='Customer Status')),
-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this customer should be treated as active. Unselect this instead of deleting accounts.', verbose_name='Active')),
-                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Date/Time Joined')),
-                ('created_by', models.CharField(blank=True, max_length=256, null=True, verbose_name='Created by')),
-                ('modified', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Modified')),
-                ('modified_by', models.CharField(blank=True, max_length=256, null=True, verbose_name='Modified by')),
-                ('last_changed_email', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Last changed email date')),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(
+                        max_length=500,
+                        upload_to=base.utils.media_filename.handle_filename,
+                        verbose_name="Image",
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        db_index=True,
+                        max_length=254,
+                        unique=True,
+                        verbose_name="Email Address",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        db_index=True,
+                        max_length=256,
+                        unique=True,
+                        verbose_name="Name"
+                    ),
+                ),
+                (
+                    "surname",
+                    models.CharField(
+                        db_index=True,
+                        max_length=256,
+                        unique=True,
+                        verbose_name="Surname",
+                    ),
+                ),
+                (
+                    "deactivated",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="Deactivated"
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("DEACTIVATED", "DEACTIVATED"),
+                            ("SUSPENDED", "SUSPENDED"),
+                            ("ACTIVE", "ACTIVE"),
+                        ],
+                        default="ACTIVE",
+                        max_length=20,
+                        null=True,
+                        verbose_name="Customer Status",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Designates whether this customer "
+                                  "should be treated as active.",
+                        verbose_name="Active",
+                    ),
+                ),
+                (
+                    "date_joined",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now,
+                        verbose_name="Date/Time Joined",
+                    ),
+                ),
+                (
+                    "created_by",
+                    models.CharField(
+                        blank=True,
+                        max_length=256,
+                        null=True,
+                        verbose_name="Created by"
+                    ),
+                ),
+                (
+                    "modified",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now,
+                        verbose_name="Modified"
+                    ),
+                ),
+                (
+                    "modified_by",
+                    models.CharField(
+                        blank=True,
+                        max_length=256,
+                        null=True,
+                        verbose_name="Modified by",
+                    ),
+                ),
+                (
+                    "last_changed_email",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now,
+                        verbose_name="Last changed email date",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

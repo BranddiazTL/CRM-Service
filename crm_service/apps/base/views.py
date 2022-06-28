@@ -18,14 +18,17 @@ def server_error(request, *args, **kwargs):
     """
     exc_type, exc_obj, exc_tb = sys.exc_info()
 
-    if not settings.DEBUG and request.META.get('CONTENT_TYPE', None) == "application/json":
+    if (
+        not settings.DEBUG
+        and request.META.get("CONTENT_TYPE", None) == "application/json"
+    ):
         response_dict = {
-            'error_type': exc_type.__name__ if exc_type else 'ServerError',
-            'errors': [
+            "error_type": exc_type.__name__ if exc_type else "ServerError",
+            "errors": [
                 {
-                    'message': 'Server application error',
+                    "message": "Server application error",
                 }
-            ]
+            ],
         }
         return http.JsonResponse(data=response_dict, status=500)
 

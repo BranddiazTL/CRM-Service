@@ -1,6 +1,111 @@
 # CRM-Service
 
-## How to Make the Project from Scratch
+## Project Set-Up
+
+The project is build for easy set up in any environment, the only thing you
+will need is Docker in your system.
+
+After installing Docker you can clone the repo from:
+
+    git clone https://github.com/BranddiazTL/CRM-Service.git
+
+Now in the root directory of the project you can use the command:
+
+    docker-compose up --build
+    
+This command will trigger the creation of the PostgreSQL database and
+the Django project specified on the Docker Compose file. The --build flag
+tells docker to install all of our dependencies on the requirements.txt file
+so we only need to use this flag in the first run, or if we need a new dependency.
+
+In any other instance we use:
+
+    docker-compose up
+    
+Now our project is ready to use on the default :8000 port on our localhost.
+
+After we finish using the project we need to stop the currently running 
+container with "Control + c" and additionally type:
+ 
+    docker-compose down 
+    
+in the root terminal. 
+
+Docker containers take up a lot of memory so it's a good idea to stop them when we are done using them.
+
+## How to Use the Project
+
+Now that we now how to set up the project, we need to know how to use it. 
+Our project has 2 parts, the Admin side, and the API.
+
+Admin Side:
+
+You can visit the side on 
+
+http://localhost:8000/admin/
+
+In there you will find a Login form, you can create an Admin User as follows:
+
+    docker-compose exec app python manage.py createsuperuser
+
+
+In the admin side you will find that you can 
++ Manage and create new users
++ Manage and create new customers 
++ Manage and create new customers OAuth2 Applications (that will auto generate the client
+ID and the client secret)
+
+When you add a new user you can set if that user 
+has permissions to manage the Customers or not, and if you want the user to
+been able to Login to the admin side be setting the user as STAFF and adding
+the Customers permissions on the EDIT page.
+
+API:
+
+Now that you have your OAuth2 application you can use the Login method
+to Authenticate on the API and create and manage the Customers information.
+
+POST http://localhost:8000/o/token/ Json Body
+
+On this endpoint you will send the Application client information in a JSON
+Body like this:
+
+    {   
+        "grant_type": "password",
+        "client_id": "U8hUqOes3nDv3CqUrLIXcQMlExWIO8jLZQEwdhNi",
+        "username": "admin",
+        "password": "admin"
+    }
+
+With that you will receive a JSON response with your Bearer token:
+
+    {
+        "access_token": "ewnGy6y2bkUmzGi7Pz9DoGqgCpnXzZ",
+        "expires_in": 36000,
+        "token_type": "Bearer",
+        "scope": "read write groups",
+        "refresh_token": "euwNlIwpwHziWhXfowWAbe26ccZVMF"
+    }
+
+Now you can uses all the Customer endpoints to GET and manage the customers,
+you can access the API Documentation to see the available endpoints and request schemas:
+
+http://localhost:8000/docs/
+
+Now that you are familiar with the endpoints you can go ahead and use 
+the endpoints with the token you receive from the Login endpoint.
+
+You only need to sent the following Header:
+
+    Key               Value
+    
+    Authorization     Bearer {token}
+    
+And that is it, you now have access to GET, POST, PUT, PATCH and DELETE 
+of Customers.
+
+
+## How to Make the Django Project Boiler Plate from Scratch
 
 The first step is to install the desktop Docker app for your local machine:
 
@@ -58,5 +163,3 @@ To exit the server that is running we use CTRL + C, and to exit from the
 VENV enviorement we use the command 'deactivate'
 
     (.venv) $ deactivate
-    
-To be continue...

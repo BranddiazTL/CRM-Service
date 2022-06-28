@@ -9,8 +9,6 @@ def handle_filename(instance, filename):
     model_name = instance.__class__.__name__.lower()
     filename, extension = splitext(filename)
     filename = uuid.uuid4().hex
-    return "{}/{}/{}/{}{}".format(app_label,
-                                  model_name,
-                                  instance.id,
-                                  filename,
-                                  extension)
+    return "{}/{}/{}/{}{}".format(
+        app_label, model_name, instance.id, filename, extension
+    )

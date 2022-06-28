@@ -10,16 +10,8 @@ jobs:
           name: install dependencies
           command: pip install -r requirements.txt
       - run:
-          name: lint
-          command: pylint crm_service/
-      - run:
           name: flake8
           command: flake8 crm_service/
-#      - run:
-#          name: tests
-#          command: python manage.py test
-#      - store_test_results:
-#          path: test_results
 
   build-and-deploy-docker:
       docker:

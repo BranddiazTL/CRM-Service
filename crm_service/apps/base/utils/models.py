@@ -1,15 +1,11 @@
-
-
 class Choice:
-
-    def __init__(self, name, value=None, help_text=''):
+    def __init__(self, name, value=None, help_text=""):
         self.name = name
         self.value = value if value is not None else name
         self.help_text = help_text
 
 
 class Choices:
-
     def __init__(self, *args, **kwargs):
 
         choices = []
@@ -31,10 +27,12 @@ class Choices:
             setattr(self, choice.name, choice.value)
 
         self.choice_objects = choices
-        self.choices = tuple([(choice.name, choice.value) for choice in choices])
+        self.choices = tuple([(choice.name, choice.value)
+                              for choice in choices])
         self.keys = [choice.name for choice in choices]
         self.values = [choice.value for choice in choices]
-        self.description = [[choice.value, choice.help_text] for choice in choices]
+        self.description = [[choice.value, choice.help_text]
+                            for choice in choices]
 
     def next(self, value):
 

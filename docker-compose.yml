@@ -8,8 +8,12 @@ services:
       - "8000:8000"
     volumes:
       - .:/CRM-Service
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000"
     environment:
+      - SECRET_KEY='django-insecure-h#uk*0dj^*_cf=f+(6@wmah_m+8+nl)&ulmeyp)ag(5kd)21ho'
+      - DEBUG=True
       - DB_HOST=db
       - DB_NAME=crm-service-db
       - DB_USER=user

@@ -1,0 +1,204 @@
+openapi: 3.0.2
+info:
+  title: 'CRM-SERVICE'
+  version: ''
+paths:
+  /customers/:
+    get:
+      operationId: listCustomers
+      description: API endpoint that allows customers to be viewed or edited.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - customers
+    post:
+      operationId: createCustomer
+      description: API endpoint that allows customers to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - customers
+  /customers/{id}/:
+    get:
+      operationId: retrieveCustomer
+      description: API endpoint that allows customers to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this customer.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - customers
+    put:
+      operationId: updateCustomer
+      description: API endpoint that allows customers to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this customer.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - customers
+    patch:
+      operationId: partialUpdateCustomer
+      description: API endpoint that allows customers to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this customer.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Customer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+      tags:
+      - customers
+    delete:
+      operationId: destroyCustomer
+      description: API endpoint that allows customers to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A UUID string identifying this customer.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - customers
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        image:
+          type: string
+          format: binary
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        name:
+          type: string
+          maxLength: 256
+        surname:
+          type: string
+          maxLength: 256
+        deactivated:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          enum:
+          - DEACTIVATED
+          - SUSPENDED
+          - ACTIVE
+          type: string
+          nullable: true
+        is_active:
+          type: boolean
+          description: Designates whether this customer should be treated as active.
+            Unselect this instead of deleting accounts.
+      required:
+      - image
+      - email
+      - name
+      - surname
